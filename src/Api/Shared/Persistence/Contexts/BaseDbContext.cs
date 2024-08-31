@@ -5,8 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 namespace Api.Shared.Persistence.Contexts;
 
-public partial class BaseDbContext(DbContextOptions<BaseDbContext> options) : DbContext(options)
+public partial class BaseDbContext : DbContext
 {
+    public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
+    {
+    }
+
+    public BaseDbContext()
+    {
+    }
+
     public DbSet<Presentation> Presentations { get; set; }
     public DbSet<Slide> Slides { get; set; }
     public DbSet<MultipleChoice> MultipleChoices { get; set; }
