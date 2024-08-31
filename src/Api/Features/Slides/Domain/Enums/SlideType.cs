@@ -2,7 +2,7 @@
 {
     public enum SlideType
     {
-        MultipleChoice=1,
+        MultipleChoice = 1,
         Video
     }
 }

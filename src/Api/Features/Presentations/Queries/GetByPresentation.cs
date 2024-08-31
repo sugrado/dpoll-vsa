@@ -56,7 +56,7 @@ internal sealed class GetByPresentationQueryHandler(BaseDbContext baseDbContext)
 
 public class GetByPresentationResponse
 {
-    public SlideType Type { get; set; }
+    public required string Type { get; set; }
     public GetByPresentationVideoDto? Video { get; set; }
     public GetByPresentationMultipleChoiceDto? MultipleChoice { get; set; }
 }
