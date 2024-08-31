@@ -38,7 +38,7 @@ internal sealed class GetByPresentationQueryHandler(BaseDbContext baseDbContext)
             .SelectMany(p => p.Slides!)
             .Select(s => new GetByPresentationResponse
             {
-                Type = s.Type,
+                Type = s.Type.ToString(),
                 Video = s.Type == SlideType.Video ? new GetByPresentationVideoDto
                 {
                     Title = s.Video!.Title,
