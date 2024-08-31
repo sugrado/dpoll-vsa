@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{12D24345-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "src\Api\Api.csproj", "{B0279587-90C9-4059-AC7F-C76A35359699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Features.Tests", "tests\Features.Tests\Features.Tests.csproj", "{ADEA9994-91F9-43D8-8124-41C0817234A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Features.Tests", "tests\Features.Tests\Features.Tests.csproj", "{ADEA9994-91F9-43D8-8124-41C0817234A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +33,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B0279587-90C9-4059-AC7F-C76A35359699} = {3DFC7CE7-BFBF-4FB5-B44D-5A48CD659F99}
+		{ADEA9994-91F9-43D8-8124-41C0817234A4} = {157AC2FC-B216-4178-82A8-40C3C819D690}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C09ED0A8-EBC5-4847-ADEF-9BA34A9698D1}
