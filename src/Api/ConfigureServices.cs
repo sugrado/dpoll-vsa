@@ -1,4 +1,8 @@
 ﻿using Api.Config;
+using Api.Features.Presentations.Infrastructure.Persistence;
+using Api.Features.Presentations.Infrastructure.Persistence.Implementations;
+using Api.Features.Slides.Infrastructure.Persistence;
+using Api.Features.Slides.Infrastructure.Persistence.Implementations;
 using Api.Shared.Behaviors.Transaction;
 using Api.Shared.Behaviors.Validation;
 using Api.Shared.Persistence.Contexts;
@@ -29,6 +33,9 @@ public static class ConfigureServices
         {
             options.UseNpgsql(configuration.GetConnectionString("Postgres"));
         });
+        services.AddScoped<ISlideRepository, EfSlideRepository>();
+        services.AddScoped<IMultipleChoiceRepository, EfMultipleChoiceRepository>();
+        services.AddScoped<IPresentationRepository, EfPresentationRepository>();
 
         return services;
     }
