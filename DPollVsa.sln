@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{157AC2FC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{12D24345-D722-44A2-8A3B-0D4FCBFACA27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{B0279587-90C9-4059-AC7F-C76A35359699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "src\Api\Api.csproj", "{B0279587-90C9-4059-AC7F-C76A35359699}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Features.Tests", "tests\Features.Tests\Features.Tests.csproj", "{ADEA9994-91F9-43D8-8124-41C0817234A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B0279587-90C9-4059-AC7F-C76A35359699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0279587-90C9-4059-AC7F-C76A35359699}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0279587-90C9-4059-AC7F-C76A35359699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEA9994-91F9-43D8-8124-41C0817234A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADEA9994-91F9-43D8-8124-41C0817234A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEA9994-91F9-43D8-8124-41C0817234A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADEA9994-91F9-43D8-8124-41C0817234A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
