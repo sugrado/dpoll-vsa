@@ -1,17 +1,21 @@
-﻿using Api.Features.Slides.Domain.Entities;
+﻿using Api.Features.Presentations.Domain.Entities;
+using Api.Features.Slides;
+using Api.Features.Slides.Domain.Entities;
 using Api.Features.Slides.Domain.Enums;
-using Api.Features.Slides.Infrastructure.Persistence;
 using Api.Shared;
 using Api.Shared.Behaviors.Transaction;
+using Api.Shared.Exceptions;
+using Api.Shared.Extensions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Api.Features.Presentations.Commands;
 
 public partial class PresentationsController : ApiControllerBase
 {
-    [HttpPost("/api/presentations/{presentationId}/slides")]
+    [HttpPost("api/presentations/{presentationId}/slides")]
     public async Task<IActionResult> AddSlide([FromRoute] string presentationId, [FromBody] AddSlideDto addSlideDto)
     {
         AddSlideCommand command = new() { PresentationId = presentationId, Slide = addSlideDto };
@@ -20,8 +24,7 @@ public partial class PresentationsController : ApiControllerBase
     }
 }
 
-public record AddSlideDto(SlideType Type, short Order, AddSlideMultipleChoiceDto? MultipleChoice);
-public record AddSlideMultipleChoiceDto(string Title, string[] Choices);
+public record AddSlideDto(SlideType Type, short Order, JsonDocument? Content);
 
 public class AddSlideCommandValidator : AbstractValidator<AddSlideCommand>
 {
@@ -29,12 +32,8 @@ public class AddSlideCommandValidator : AbstractValidator<AddSlideCommand>
     {
         RuleFor(v => v.Slide.Type).NotNull().NotEmpty().IsInEnum();
         RuleFor(v => v.Slide.Order).NotNull().NotEmpty();
-        When(p => p.Slide.Type == SlideType.MultipleChoice, () =>
-        {
-            RuleFor(v => v.Slide.MultipleChoice).NotNull().NotEmpty();
-            RuleFor(v => v.Slide.MultipleChoice!.Title).NotNull().NotEmpty().MinimumLength(3).MaximumLength(256);
-            RuleFor(v => v.Slide.MultipleChoice!.Choices).Must(p => p != null && p.Length != 0);
-        });
+        RuleFor(v => v.Slide.Content).NotNull().NotEmpty();
+        RuleFor(v => v.PresentationId).NotNull().NotEmpty().IsGuid();
     }
 }
 
@@ -43,45 +42,28 @@ public class AddSlideCommand : IRequest, ITransactionalRequest
     public required string PresentationId { get; set; }
     public required AddSlideDto Slide { get; set; }
 
-    public class AddSlideCommandHandler(ISlideRepository slideRepository, IMultipleChoiceRepository multipleChoiceRepository) : IRequestHandler<AddSlideCommand>
+    public class AddSlideCommandHandler(
+        ISlideRepository slideRepository,
+        IPresentationRepository presentationRepository) : IRequestHandler<AddSlideCommand>
     {
         public async Task Handle(AddSlideCommand request, CancellationToken cancellationToken)
         {
+            Presentation? presentation = await presentationRepository.GetAsync(p => p.Id.Equals(Guid.Parse(request.PresentationId)), cancellationToken: cancellationToken);
+            if (presentation is null)
+            {
+                throw new NotFoundException("Presentation not found.");
+            }
+
             Slide slide = new()
             {
-                PresentationId = Guid.Parse(request.PresentationId),
+                PresentationId = presentation.Id,
                 Type = request.Slide.Type,
-                Order = request.Slide.Order
+                Order = request.Slide.Order,
+                Visible = true,
+                Content = request.Slide.Content!
             };
 
             await slideRepository.AddAsync(slide);
-
-            switch (request.Slide.Type)
-            {
-                case SlideType.MultipleChoice:
-                    await CreateMultipleChoiceSlide(slide, request.Slide.MultipleChoice!, cancellationToken);
-                    break;
-                case SlideType.Video:
-                    //Video creation logic
-                    break;
-            }
-        }
-
-        private async Task CreateMultipleChoiceSlide(Slide slide, AddSlideMultipleChoiceDto multipleChoiceDto, CancellationToken cancellationToken)
-        {
-            List<MultipleChoiceOption> options = multipleChoiceDto
-                .Choices
-                .Select(p => new MultipleChoiceOption { Value = p })
-                .ToList();
-
-            MultipleChoice multipleChoice = new()
-            {
-                Slide = slide,
-                Options = options,
-                Title = multipleChoiceDto.Title
-            };
-
-            await multipleChoiceRepository.AddAsync(multipleChoice);
         }
     }
 }

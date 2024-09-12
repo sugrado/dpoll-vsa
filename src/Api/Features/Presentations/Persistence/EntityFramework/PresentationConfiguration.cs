@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Api.Features.Presentations.Infrastructure.Persistence;
+namespace Api.Features.Presentations.Persistence.EntityFramework;
 
 public class PresentationConfiguration : IEntityTypeConfiguration<Presentation>
 {

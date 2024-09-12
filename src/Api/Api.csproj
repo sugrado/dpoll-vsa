@@ -7,6 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Features\Slides\NewFolder\**" />
+	  <Content Remove="Features\Slides\NewFolder\**" />
+	  <EmbeddedResource Remove="Features\Slides\NewFolder\**" />
+	  <None Remove="Features\Slides\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
@@ -21,10 +28,6 @@
 		<PackageReference Include="MediatR" Version="12.4.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
 
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Features\Slides\Commands\" />
 	</ItemGroup>
 
 </Project>

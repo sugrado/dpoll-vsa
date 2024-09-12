@@ -1,8 +1,7 @@
-﻿namespace Api.Features.Slides.Domain.Enums
+﻿namespace Api.Features.Slides.Domain.Enums;
+
+public enum SlideType
 {
-    public enum SlideType
-    {
-        MultipleChoice = 1,
-        Video
-    }
+    MultipleChoice = 1,
+    Video
 }
